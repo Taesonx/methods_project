@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FormSolve</class>
+ <widget class="QWidget" name="FormSolve">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>550</width>
+    <height>678</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #1a2a3a,
+                                stop:1 #0d1b2a);
+    font-family: 'Segoe UI', 'Consolas', monospace;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item alignment="Qt::AlignmentFlag::AlignHCenter">
+      <widget class="QLabel" name="titleLabel">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>-1</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#titleLabel {
+    color: #61dafb;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}</string>
+       </property>
+       <property name="text">
+        <string>Решение задачи (Вариант 29)</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignmentFlag::AlignHCenter">
+      <widget class="QLabel" name="formulaLabel">
+       <property name="styleSheet">
+        <string notr="true">QLabel#formulaLabel {
+    color: #98c1d9;
+    font-size: 11px;
+    font-family: 'Consolas', monospace;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 5px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>../capture_20260403112801618.png</pixmap>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="xEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #2a3a4a;
+    border: 1px solid #4a6a7a;
+    border-radius: 6px;
+    padding: 3px 2px;
+    font-size: 15px;
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+}
+
+QLineEdit:focus {
+    border: 2px solid #61dafb;
+    background-color: #1e2e3e;
+}
+
+QLineEdit:hover {
+    border: 1px solid #61dafb;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>x </string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="aLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: #c0cbd6;
+    font-size: 15px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Введите a:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="xLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: #c0cbd6;
+    font-size: 15px;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>Введите x:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="cLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: #c0cbd6;
+    font-size: 15px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Введите c:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="bEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #2a3a4a;
+    border: 1px solid #4a6a7a;
+    border-radius: 6px;
+    padding: 5px 2px;
+    font-size: 15px;
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+}
+
+QLineEdit:focus {
+    border: 2px solid #61dafb;
+    background-color: #1e2e3e;
+}
+
+QLineEdit:hover {
+    border: 1px solid #61dafb;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>b</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="cEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #2a3a4a;
+    border: 1px solid #4a6a7a;
+    border-radius: 6px;
+    padding: 3px 2px;
+    font-size: 15px;
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+}
+
+QLineEdit:focus {
+    border: 2px solid #61dafb;
+    background-color: #1e2e3e;
+}
+
+QLineEdit:hover {
+    border: 1px solid #61dafb;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>c</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="dLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: #c0cbd6;
+    font-size: 15px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Введите d:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="dEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #2a3a4a;
+    border: 1px solid #4a6a7a;
+    border-radius: 6px;
+    padding: 3px 2px;
+    font-size: 15px;
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+}
+
+QLineEdit:focus {
+    border: 2px solid #61dafb;
+    background-color: #1e2e3e;
+}
+
+QLineEdit:hover {
+    border: 1px solid #61dafb;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>d</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="aEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #2a3a4a;
+    border: 1px solid #4a6a7a;
+    border-radius: 6px;
+    padding: 3px 2px;
+    font-size: 15px;
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+}
+
+QLineEdit:focus {
+    border: 2px solid #61dafb;
+    background-color: #1e2e3e;
+}
+
+QLineEdit:hover {
+    border: 1px solid #61dafb;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>a</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="bLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: #c0cbd6;
+    font-size: 15px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Введите b:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="eLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    color: #c0cbd6;
+    font-size: 15px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Введите e:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="eEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #2a3a4a;
+    border: 1px solid #4a6a7a;
+    border-radius: 6px;
+    padding: 3px 2px;
+    font-size: 15px;
+    color: #e0e0e0;
+    font-family: 'Consolas', monospace;
+}
+
+QLineEdit:focus {
+    border: 2px solid #61dafb;
+    background-color: #1e2e3e;
+}
+
+QLineEdit:hover {
+    border: 1px solid #61dafb;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>e</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="calculateButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #45a049;
+}</string>
+       </property>
+       <property name="text">
+        <string>Вычислить</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignmentFlag::AlignHCenter">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>13</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Результат:</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignmentFlag::AlignHCenter">
+      <widget class="QLabel" name="resultLabel">
+       <property name="font">
+        <font>
+         <family>Consolas</family>
+         <pointsize>-1</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#resultLabel {
+    background-color: #0a1a2a;
+    border: 1px solid #2ecc71;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Consolas', monospace;
+    color: #2ecc71;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}</string>
+       </property>
+       <property name="text">
+        <string>---</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="backButton">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+QPushButton:hover {
+    background-color: #da190b;
+}</string>
+       </property>
+       <property name="text">
+        <string>Назад</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
