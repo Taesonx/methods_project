@@ -1,17 +1,11 @@
-#include <QCoreApplication>
-#include "mytcpserver.h"
-#include "DatabaseManager.h"
-#include <QDebug>
+#include <QApplication>
+#include "functionsforclient.h"
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication app(argc, argv);
 
-    if (!DatabaseManager::getInstance().connect()) {
-        qDebug() << "Database connection failed!";
-    }
+    FunctionsForClient controller;
 
-    MyTcpServer server;
-
-    return a.exec();
+    return app.exec();
 }
