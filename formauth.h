@@ -3,7 +3,6 @@
 
 #include <QWidget>
 
-
 namespace Ui {
 class FormAuth;
 }
@@ -19,6 +18,7 @@ public:
 signals:
     void authRequest(const QString& login, const QString& password);
     void registerRequested();
+    void forgotPasswordRequested();
 
 public slots:
     void onAuthSuccess();
@@ -27,6 +27,7 @@ public slots:
 private slots:
     void onLoginButtonClicked();
     void onRegisterButtonClicked();
+    void onForgotButtonClicked();
 
 private:
     Ui::FormAuth *ui;

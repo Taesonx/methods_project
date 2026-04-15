@@ -12,6 +12,8 @@ FormAuth::FormAuth(QWidget *parent) :
             this, &FormAuth::onLoginButtonClicked);
     connect(ui->registerButton, &QPushButton::clicked,
             this, &FormAuth::onRegisterButtonClicked);
+    connect(ui->forgotButton, &QPushButton::clicked,
+            this, &FormAuth::onForgotButtonClicked);
 }
 
 FormAuth::~FormAuth()
@@ -27,6 +29,11 @@ void FormAuth::onLoginButtonClicked()
 void FormAuth::onRegisterButtonClicked()
 {
     emit registerRequested();
+}
+
+void FormAuth::onForgotButtonClicked()
+{
+    emit forgotPasswordRequested();
 }
 
 void FormAuth::onAuthSuccess()

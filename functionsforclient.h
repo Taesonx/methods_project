@@ -8,6 +8,7 @@
 #include "formtaskchoice.h"
 #include "formsolve.h"
 #include "mainwindow.h"
+#include "formresetpassword.h"
 
 class FunctionsForClient : public QObject
 {
@@ -22,6 +23,8 @@ private slots:
     void processRegister(const QString& login, const QString& password, const QString& email);
     void processTaskSelected(int taskId);
     void showMainWindow(double a, double b, double c, double d, double e);
+    void processResetPassword(const QString& email);
+    void showResetPasswordForm();
 
     void showAuthForm();
     void showRegForm();
@@ -37,6 +40,7 @@ private:
     FormTaskChoice* taskChoiceForm;
     FormSolve* solveForm;
     MainWindow* mainWindow;
+    FormResetPassword* resetPasswordForm;
 
     struct User {
         QString login;
@@ -44,6 +48,7 @@ private:
         QString email;
     };
     QMap<QString, User> users;
+    QMap<QString, QString> emailToLogin;
 };
 
 #endif // FUNCTIONSFORCLIENT_H

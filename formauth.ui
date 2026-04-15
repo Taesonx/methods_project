@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Авторизация</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
@@ -19,6 +19,26 @@
                                 stop:0 #f0f4f8,
                                 stop:1 #d9e2ec);
     font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* Кнопка "Забыл пароль" */
+QPushButton#forgotButton {
+    background: transparent;
+    color: #64748b;
+    border: none;
+    font-size: 11px;
+    font-weight: normal;
+    text-align: center;
+    padding: 5px;
+}
+
+QPushButton#forgotButton:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+
+QPushButton#forgotButton:pressed {
+    color: #2563eb;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -121,7 +141,7 @@ QLineEdit:hover {
 }</string>
          </property>
          <property name="text">
-          <string>Пароль</string>
+          <string>Пароль:</string>
          </property>
         </widget>
        </item>
@@ -136,7 +156,7 @@ QLineEdit:hover {
 }</string>
          </property>
          <property name="text">
-          <string>Логин</string>
+          <string>Логин:</string>
          </property>
         </widget>
        </item>
@@ -207,6 +227,46 @@ QPushButton#registerButton:pressed {
           <string>Регистрация</string>
          </property>
         </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="forgotLayout">
+       <item>
+        <spacer name="forgotSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="forgotButton">
+         <property name="text">
+          <string>Забыл пароль?</string>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="forgotSpacer2">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>

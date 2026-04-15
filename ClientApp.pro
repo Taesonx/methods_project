@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     formauth.cpp \
     formreg.cpp \
+    formresetpassword.cpp \
     formsolve.cpp \
     formtaskchoice.cpp \
     functionsforclient.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 HEADERS += \
     formauth.h \
     formreg.h \
+    formresetpassword.h \
     formsolve.h \
     formtaskchoice.h \
     functionsforclient.h \
@@ -31,6 +33,7 @@ HEADERS += \
 FORMS += \
     formauth.ui \
     formreg.ui \
+    formresetpassword.ui \
     formsolve.ui \
     formtaskchoice.ui \
     mainwindow.ui
