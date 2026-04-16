@@ -6,6 +6,7 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QCryptographicHash>
+#include <QVector>
 
 class DatabaseManager {
 private:
@@ -19,16 +20,27 @@ private:
 
 public:
     static DatabaseManager& getInstance();
+    ~DatabaseManager();
 
     bool connect();
     void close();
-
+    bool isOpen() const;
     bool registerUser(const QString& name, const QString& login, const QString& password, const QString& mail);
     int loginUser(const QString& login, const QString& password);
-
+    QString getUserRole(int userId);
+    QString resetPassword(const QString& login, const QString& email);
+    QString adminResetPassword(const QString& login);
     bool save(int userId, double x, double a, double b, double c, double d, double e, double result);
 
-    ~DatabaseManager();
+    QVector<int> getStats(int userId);
+    void updateStats(int userId, bool solved, int timeSpent = 1);
+
+    int getUserCount();
+    int getTodayRegisteredCount();
+    int getTotalCalculationsCount();
+    int getUserCalculationsCount(int userId);
+    int getActiveUserCount();
+    double getAvgCalculationsPerUser();
 };
 
-#endif
+#endif // DATABASEMANAGER_H

@@ -1,81 +1,76 @@
 #include "mytcpserver.h"
-#include "function29.h"
-#include "DatabaseManager.h"
+#include "request_handler.h"
 #include <QDebug>
 
 MyTcpServer::MyTcpServer(QObject *parent) : QObject(parent)
 {
     mTcpServer = new QTcpServer(this);
-
-    connect(mTcpServer, &QTcpServer::newConnection,
-            this, &MyTcpServer::slotNewConnection);
-
-    if(!mTcpServer->listen(QHostAddress::Any, 8080)){
-        qDebug() << "Server is not started! Error:" << mTcpServer->errorString();
-    } else {
-        qDebug() << "Server is started on port 8080";
-    }
+    m_handler = new RequestHandler();
 }
 
 MyTcpServer::~MyTcpServer()
 {
-    if(mTcpServer) {
+    if (mTcpServer->isListening()) {
         mTcpServer->close();
+        qDebug() << "Server stopped!";
     }
+    delete m_handler;
+}
+
+bool MyTcpServer::start(quint16 port)
+{
+    connect(mTcpServer, &QTcpServer::newConnection, this, &MyTcpServer::slotNewConnection);
+
+    if (!mTcpServer->listen(QHostAddress::Any, port)) {
+        qDebug() << "Server is not started! Error:" << mTcpServer->errorString();
+        return false;
+    }
+
+    qDebug() << "========================================";
+    qDebug() << "Server is started on port" << port;
+    qDebug() << "Waiting for connections...";
+    qDebug() << "========================================";
+    return true;
 }
 
 void MyTcpServer::slotNewConnection()
 {
     mTcpSocket = mTcpServer->nextPendingConnection();
-    mTcpSocket->write("Connected to Calculation Server!\r\n");
+    m_clients[mTcpSocket] = -1;
+    m_roles[mTcpSocket] = "none";
 
-    connect(mTcpSocket, &QTcpSocket::readyRead,
-            this, &MyTcpServer::slotServerRead);
-    connect(mTcpSocket, &QTcpSocket::disconnected,
-            this, &MyTcpServer::slotClientDisconnected);
+    mTcpSocket->write("Connected to Calculation Server!\r\n");
+    mTcpSocket->flush();
+
+    connect(mTcpSocket, &QTcpSocket::readyRead, this, &MyTcpServer::slotReadyRead);
+    connect(mTcpSocket, &QTcpSocket::disconnected, this, &MyTcpServer::slotClientDisconnected);
 
     qDebug() << "New client connected!";
+    qDebug() << "Total connected clients:" << m_clients.size();
 }
 
 void MyTcpServer::slotClientDisconnected()
 {
     qDebug() << "Client disconnected!";
-    mTcpSocket->close();
+    m_clients.remove(mTcpSocket);
+    m_roles.remove(mTcpSocket);
+    mTcpSocket->deleteLater();
+    qDebug() << "Total connected clients left:" << m_clients.size();
 }
 
-void MyTcpServer::slotServerRead()
+void MyTcpServer::slotReadyRead()
 {
     QByteArray data = mTcpSocket->readAll();
     QString receivedStr = QString::fromUtf8(data).trimmed();
     qDebug() << "Received:" << receivedStr;
 
-    QStringList parts = receivedStr.split(',');
+    int& userId = m_clients[mTcpSocket];
+    QString& role = m_roles[mTcpSocket];
 
-    if (parts.size() != 6) {
-        mTcpSocket->write("ERROR: Need 6 numbers: x,a,b,c,d,e\n");
-        return;
-    }
+    QString response = m_handler->handle(receivedStr, userId, role);
 
-    bool ok1, ok2, ok3, ok4, ok5, ok6;
-    double x = parts[0].toDouble(&ok1);
-    double a = parts[1].toDouble(&ok2);
-    double b = parts[2].toDouble(&ok3);
-    double c = parts[3].toDouble(&ok4);
-    double d = parts[4].toDouble(&ok5);
-    double e = parts[5].toDouble(&ok6);
+    mTcpSocket->write(response.toUtf8() + "\n");
+    mTcpSocket->flush();
 
-    if (!ok1 || !ok2 || !ok3 || !ok4 || !ok5 || !ok6) {
-        mTcpSocket->write("ERROR: Invalid numbers\n");
-        return;
-    }
-
-    double result = f29(x, a, b, c, d, e);
-
-    int userId = 1;
-    DatabaseManager::getInstance().save(userId, x, a, b, c, d, e, result);
-
-    QString response = QString::number(result) + "\n";
-    mTcpSocket->write(response.toUtf8());
-
-    qDebug() << "f(" << x << "," << a << "," << b << "," << c << "," << d << "," << e << ") = " << result;
+    qDebug() << "Response:" << response.trimmed();
 }

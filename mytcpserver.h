@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QtNetwork>
+#include <QMap>
+
+class RequestHandler;
 
 class MyTcpServer : public QObject
 {
@@ -14,14 +16,19 @@ public:
     explicit MyTcpServer(QObject *parent = nullptr);
     ~MyTcpServer();
 
+    bool start(quint16 port);
+
 public slots:
-    void slotNewConnection();        // когда подключается новый клиент
-    void slotClientDisconnected();   // когда клиент отключился
-    void slotServerRead();           // когда пришли данные от клиента
+    void slotNewConnection();
+    void slotReadyRead();
+    void slotClientDisconnected();
 
 private:
-    QTcpServer * mTcpServer;
-    QTcpSocket * mTcpSocket;
+    QTcpServer* mTcpServer;
+    QTcpSocket* mTcpSocket;
+    RequestHandler* m_handler;
+    QMap<QTcpSocket*, int> m_clients;
+    QMap<QTcpSocket*, QString> m_roles;
 };
 
 #endif // MYTCPSERVER_H
