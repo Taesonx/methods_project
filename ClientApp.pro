@@ -1,7 +1,7 @@
 QMAKE_CXXFLAGS += -Wno-implicit-function-declaration
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += core widgets charts
+greaterThan(QT_MAJOR_VERSION, 4): QT += core widgets charts network
 
 CONFIG += c++17
 
@@ -18,7 +18,8 @@ SOURCES += \
     functionsforclient.cpp \
     main.cpp \
     mainwindow.cpp \
-    mathfunction.cpp
+    mathfunction.cpp \
+    tcpclient.cpp
 
 HEADERS += \
     formauth.h \
@@ -28,7 +29,8 @@ HEADERS += \
     formtaskchoice.h \
     functionsforclient.h \
     mainwindow.h \
-    mathfunction.h
+    mathfunction.h \
+    tcpclient.h
 
 FORMS += \
     formauth.ui \

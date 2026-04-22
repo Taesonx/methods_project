@@ -9,6 +9,7 @@
 #include "formsolve.h"
 #include "mainwindow.h"
 #include "formresetpassword.h"
+#include "tcpclient.h"
 
 class FunctionsForClient : public QObject
 {
@@ -31,9 +32,16 @@ private slots:
     void showTaskChoiceForm();
     void showSolveForm();
 
+    void onServerConnected();
+    void onServerDisconnected();
+    void onServerError(const QString& error);
+    void onLoginResponse(bool success, const QString& message);
+    void onRegisterResponse(bool success, const QString& message);
+
 private:
     void connectSignals();
     void initTestUsers();
+    void connectToServer();
 
     FormAuth* authForm;
     FormReg* regForm;
@@ -41,6 +49,7 @@ private:
     FormSolve* solveForm;
     MainWindow* mainWindow;
     FormResetPassword* resetPasswordForm;
+    bool serverAvailable;
 
     struct User {
         QString login;
