@@ -1,12 +1,8 @@
 #include "DatabaseManager.h"
-#include <QDebug>
-#include <QSqlQuery>
-#include <QCryptographicHash>
-#include <QSqlError>
 
 DatabaseManager::DatabaseManager() {
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("function29.db");
+    db.setDatabaseName("database.db");
 }
 
 DatabaseManager& DatabaseManager::getInstance() {
@@ -20,33 +16,6 @@ bool DatabaseManager::connect() {
         return false;
     }
     qDebug() << "Подключено к SQLite!";
-
-    QSqlQuery query;
-    QString createUsers = "CREATE TABLE IF NOT EXISTS users ("
-                          "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                          "name TEXT NOT NULL, "
-                          "login TEXT NOT NULL UNIQUE, "
-                          "password TEXT NOT NULL, "
-                          "mail TEXT NOT NULL)";
-
-    QString createCalculations = "CREATE TABLE IF NOT EXISTS calculations ("
-                                 "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                 "x REAL NOT NULL, "
-                                 "a REAL NOT NULL, "
-                                 "b REAL NOT NULL, "
-                                 "c REAL NOT NULL, "
-                                 "d REAL NOT NULL, "
-                                 "e REAL NOT NULL, "
-                                 "result REAL NOT NULL, "
-                                 "user_id INTEGER)";
-
-    if (!query.exec(createUsers)) {
-        qDebug() << "Ошибка создания users:" << query.lastError().text();
-    }
-    if (!query.exec(createCalculations)) {
-        qDebug() << "Ошибка создания calculations:" << query.lastError().text();
-    }
-
     return true;
 }
 
@@ -135,6 +104,87 @@ bool DatabaseManager::save(int userId, double x, double a, double b, double c, d
     return true;
 }
 
+bool DatabaseManager::resetPassword(const QString& login, const QString& newPassword) {
+    if (!db.isOpen()) return false;
+
+    QString hashedPassword = hashPassword(newPassword);
+
+    QSqlQuery query;
+    query.prepare("UPDATE users SET password = :password WHERE login = :login");
+    query.bindValue(":password", hashedPassword);
+    query.bindValue(":login", login);
+
+    if (!query.exec()) {
+        qDebug() << "Ошибка сброса пароля:" << query.lastError().text();
+        return false;
+    }
+
+    if (query.numRowsAffected() == 0) {
+        qDebug() << "Пользователь с логином" << login << "не найден";
+        return false;
+    }
+
+    qDebug() << "Пароль для" << login << "успешно изменён!";
+    return true;
+}
+
+int DatabaseManager::getUserCount() {
+    if (!db.isOpen()) return -1;
+    QSqlQuery query("SELECT COUNT(*) FROM users;");
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+    }
+    return -1;
+}
+
+int DatabaseManager::getTodayRegisteredCount() {
+    if (!db.isOpen()) return -1;
+    QSqlQuery query("SELECT COUNT(*) FROM users WHERE date(created_at) = date('now');");
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+    }
+    return -1;
+}
+
+int DatabaseManager::getTotalCalculationsCount() {
+    if (!db.isOpen()) return -1;
+    QSqlQuery query("SELECT COUNT(*) FROM calculations;");
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+    }
+    return -1;
+}
+
+int DatabaseManager::getUserCalculationsCount(int userId) {
+    if (!db.isOpen()) return -1;
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM calculations WHERE user_id = ?;");
+    query.bindValue(0, userId);
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+    }
+    return -1;
+}
+
+int DatabaseManager::getActiveUserCount() {
+    if (!db.isOpen()) return -1;
+    QSqlQuery query("SELECT COUNT(DISTINCT user_id) FROM calculations;");
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+    }
+    return -1;
+}
+
+double DatabaseManager::getAvgCalculationsPerUser() {
+    if (!db.isOpen()) return -1;
+    QSqlQuery query("SELECT AVG(cnt) FROM (SELECT COUNT(*) as cnt FROM calculations GROUP BY user_id);");
+    if (query.exec() && query.next()) {
+        return query.value(0).toDouble();
+    }
+    return -1;
+}
+
 DatabaseManager::~DatabaseManager() {
     close();
 }
+
