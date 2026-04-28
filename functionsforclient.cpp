@@ -5,7 +5,10 @@
 #include <QJsonObject>
 
 
+// ============================================================
 // КОНСТРУКТОР И ДЕСТРУКТОР
+// ============================================================
+
 FunctionsForClient::FunctionsForClient(QObject *parent) : QObject(parent)
 {
     qDebug() << "=== FunctionsForClient: Инициализация контроллера ===";
@@ -35,7 +38,7 @@ FunctionsForClient::FunctionsForClient(QObject *parent) : QObject(parent)
     // 4. Подключаем сигналы и слоты
     connectSignals();
 
-    // 5. Подключаемся к серверу ← ДОБАВЛЕНО
+    // 5. Подключаемся к серверу
     connectToServer();
 
     // 6. Показываем начальную форму (авторизация)
@@ -62,7 +65,11 @@ FunctionsForClient::~FunctionsForClient()
     qDebug() << "Все формы удалены";
 }
 
+
+// ============================================================
 // ПОДКЛЮЧЕНИЕ К СЕРВЕРУ
+// ============================================================
+
 void FunctionsForClient::connectToServer()
 {
     qDebug() << "Подключение к серверу 127.0.0.1:8080...";
@@ -71,7 +78,10 @@ void FunctionsForClient::connectToServer()
 }
 
 
+// ============================================================
 // ИНИЦИАЛИЗАЦИЯ ТЕСТОВЫХ ПОЛЬЗОВАТЕЛЕЙ (ЛОКАЛЬНЫЙ РЕЗЕРВ)
+// ============================================================
+
 void FunctionsForClient::initTestUsers()
 {
     qDebug() << "Инициализация тестовых пользователей (локальный резерв)...";
@@ -107,7 +117,10 @@ void FunctionsForClient::initTestUsers()
 }
 
 
+// ============================================================
 // ПОДКЛЮЧЕНИЕ СИГНАЛОВ
+// ============================================================
+
 void FunctionsForClient::connectSignals()
 {
     qDebug() << "Подключение сигналов...";
@@ -148,11 +161,14 @@ void FunctionsForClient::connectSignals()
     qDebug() << "  - FormSolve → showMainWindow";
     qDebug() << "  - FormSolve → showTaskChoiceForm";
 
-    // ---------- ГЛАВНОЕ ОКНО ----------
-    connect(mainWindow, &MainWindow::destroyed,
-            this, &FunctionsForClient::showTaskChoiceForm);
+    // ---------- ГЛАВНОЕ ОКНО (MainWindow) ----------
+    // Кнопка "Назад" → возврат на FormSolve
+    connect(mainWindow, &MainWindow::backToSolveForm, this, &FunctionsForClient::showSolveForm);
+    // Кнопка "Завершить" или закрытие окна → возврат на FormTaskChoice
+    connect(mainWindow, &MainWindow::destroyed, this, &FunctionsForClient::showTaskChoiceForm);
 
-    qDebug() << "  - MainWindow → showTaskChoiceForm";
+    qDebug() << "  - MainWindow → showSolveForm (кнопка Назад)";
+    qDebug() << "  - MainWindow → showTaskChoiceForm (кнопка Завершить)";
 
     // ---------- ФОРМА ВОССТАНОВЛЕНИЯ ПАРОЛЯ ----------
     connect(resetPasswordForm, &FormResetPassword::resetRequested,
@@ -163,7 +179,7 @@ void FunctionsForClient::connectSignals()
     qDebug() << "  - FormResetPassword → processResetPassword";
     qDebug() << "  - FormResetPassword → showAuthForm";
 
-    // ---------- TCP CLIENT (НОВЫЕ ПОДКЛЮЧЕНИЯ) ----------
+    // ---------- TCP CLIENT ----------
     TcpClient& client = TcpClient::getInstance();
     connect(&client, &TcpClient::connected,
             this, &FunctionsForClient::onServerConnected);
@@ -175,17 +191,24 @@ void FunctionsForClient::connectSignals()
             this, &FunctionsForClient::onLoginResponse);
     connect(&client, &TcpClient::registerResponse,
             this, &FunctionsForClient::onRegisterResponse);
+    connect(&client, &TcpClient::passwordResetResponse,
+            this, &FunctionsForClient::onPasswordResetResponse);
 
     qDebug() << "  - TcpClient → onServerConnected";
     qDebug() << "  - TcpClient → onServerDisconnected";
     qDebug() << "  - TcpClient → onServerError";
     qDebug() << "  - TcpClient → onLoginResponse";
     qDebug() << "  - TcpClient → onRegisterResponse";
+    qDebug() << "  - TcpClient → onPasswordResetResponse";
 
     qDebug() << "Все сигналы подключены!";
 }
 
+
+// ============================================================
 // ОБРАБОТЧИКИ СОСТОЯНИЯ СЕРВЕРА
+// ============================================================
+
 void FunctionsForClient::onServerConnected()
 {
     qDebug() << "Сервер доступен!";
@@ -205,7 +228,10 @@ void FunctionsForClient::onServerError(const QString& error)
 }
 
 
+// ============================================================
 // ОБРАБОТЧИКИ ОТВЕТОВ ОТ СЕРВЕРА
+// ============================================================
+
 void FunctionsForClient::onLoginResponse(bool success, const QString& message)
 {
     qDebug() << "Ответ сервера на авторизацию: success=" << success << "message=" << message;
@@ -230,8 +256,22 @@ void FunctionsForClient::onRegisterResponse(bool success, const QString& message
     }
 }
 
+void FunctionsForClient::onPasswordResetResponse(bool success, const QString& newPassword)
+{
+    qDebug() << "Ответ сервера на восстановление пароля: success=" << success;
 
+    if (success) {
+        resetPasswordForm->onResetSuccess(newPassword);
+    } else {
+        resetPasswordForm->onResetFailed(newPassword);
+    }
+}
+
+
+// ============================================================
 // ОБРАБОТЧИК АВТОРИЗАЦИИ (С ПОДДЕРЖКОЙ TCP)
+// ============================================================
+
 void FunctionsForClient::processAuth(const QString& login, const QString& password)
 {
     qDebug() << "========================================";
@@ -264,7 +304,10 @@ void FunctionsForClient::processAuth(const QString& login, const QString& passwo
 }
 
 
+// ============================================================
 // ОБРАБОТЧИК РЕГИСТРАЦИИ (С ПОДДЕРЖКОЙ TCP)
+// ============================================================
+
 void FunctionsForClient::processRegister(const QString& login, const QString& password, const QString& email)
 {
     qDebug() << "========================================";
@@ -306,29 +349,46 @@ void FunctionsForClient::processRegister(const QString& login, const QString& pa
     qDebug() << "========================================";
 }
 
-// ОБРАБОТЧИК ВОССТАНОВЛЕНИЯ ПАРОЛЯ (ЛОКАЛЬНЫЙ)
+
+// ============================================================
+// ОБРАБОТЧИК ВОССТАНОВЛЕНИЯ ПАРОЛЯ
+// ============================================================
+
 void FunctionsForClient::processResetPassword(const QString& email)
 {
     qDebug() << "========================================";
     qDebug() << "ВОССТАНОВЛЕНИЕ ПАРОЛЯ";
     qDebug() << "  Email:" << email;
+    qDebug() << "  Сервер доступен:" << serverAvailable;
 
-    // Ищем пользователя по email (локальная БД)
-    if (emailToLogin.contains(email)) {
-        QString login = emailToLogin[email];
-        QString password = users[login].password;
-        qDebug() << "  Найден пользователь:" << login << "пароль:" << password;
-        resetPasswordForm->onResetSuccess(password);
+    if (serverAvailable) {
+        // Отправляем запрос на сервер
+        qDebug() << "  Отправка запроса на сервер /reset";
+        QJsonObject data;
+        data["email"] = email;
+        TcpClient::getInstance().sendRequest("/reset", data);
     } else {
-        qDebug() << "  Email не найден!";
-        resetPasswordForm->onResetFailed("Пользователь с таким email не найден!");
+        // Используем локальную проверку
+        qDebug() << "  Используем локальную проверку";
+        if (emailToLogin.contains(email)) {
+            QString login = emailToLogin[email];
+            QString password = users[login].password;
+            qDebug() << "  Найден пользователь:" << login << "пароль:" << password;
+            resetPasswordForm->onResetSuccess(password);
+        } else {
+            qDebug() << "  Email не найден!";
+            resetPasswordForm->onResetFailed("Пользователь с таким email не найден!");
+        }
     }
 
     qDebug() << "========================================";
 }
 
 
+// ============================================================
 // ОБРАБОТЧИК ВЫБОРА ЗАДАЧИ
+// ============================================================
+
 void FunctionsForClient::processTaskSelected(int taskId)
 {
     qDebug() << "========================================";
@@ -345,7 +405,11 @@ void FunctionsForClient::processTaskSelected(int taskId)
     qDebug() << "========================================";
 }
 
+
+// ============================================================
 // ПОКАЗ ГЛАВНОГО ОКНА (ГРАФИК И ТАБЛИЦА)
+// ============================================================
+
 void FunctionsForClient::showMainWindow(double a, double b, double c, double d, double e)
 {
     qDebug() << "Навигация: Показываем ГЛАВНОЕ ОКНО с графиком";
@@ -365,7 +429,10 @@ void FunctionsForClient::showMainWindow(double a, double b, double c, double d, 
 }
 
 
+// ============================================================
 // НАВИГАЦИЯ МЕЖДУ ФОРМАМИ
+// ============================================================
+
 void FunctionsForClient::showAuthForm()
 {
     qDebug() << "Навигация: Показываем форму АВТОРИЗАЦИИ";

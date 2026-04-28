@@ -24,8 +24,8 @@ void FormSolve::onCalculateButtonClicked()
     double a = 1.0;
     double b = 1.0;
     double c = 1.0;
-    double d = 29.0;
-    double e = 29.0;
+    double d = 4.0;
+    double e = 4.0;
 
     emit calculateRequested(a, b, c, d, e);
 }

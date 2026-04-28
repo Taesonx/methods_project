@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>650</height>
+    <width>850</width>
+    <height>819</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,32 +25,32 @@
 
     QLabel#titleLabel {
         color: #0f172a;
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 700;
-        padding: 15px;
+        padding: 10px;
         background: rgba(255,255,255,0.7);
-        border-radius: 15px;
+        border-radius: 12px;
     }
 
     QGroupBox {
         font-weight: 600;
-        font-size: 14px;
+        font-size: 12px;
         color: #0f172a;
         border: none;
         background: rgba(255,255,255,0.85);
-        border-radius: 20px;
-        margin-top: 15px;
-        padding-top: 15px;
+        border-radius: 16px;
+        margin-top: 10px;
+        padding-top: 10px;
     }
     QGroupBox::title {
         subcontrol-origin: margin;
-        left: 20px;
+        left: 15px;
         top: 0px;
-        padding: 0 12px;
+        padding: 0 8px;
         background: #ffffff;
-        border-radius: 20px;
+        border-radius: 16px;
         color: #1e40af;
-        font-size: 15px;
+        font-size: 13px;
     }
 
     QLabel {
@@ -63,9 +63,9 @@
                                     stop:1 #2563eb);
         color: white;
         border: none;
-        border-radius: 40px;
-        padding: 10px 24px;
-        font-size: 14px;
+        border-radius: 30px;
+        padding: 8px 20px;
+        font-size: 13px;
         font-weight: 600;
     }
     QPushButton:hover {
@@ -82,19 +82,19 @@
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <property name="spacing">
-    <number>20</number>
+    <number>12</number>
    </property>
    <property name="leftMargin">
-    <number>20</number>
+    <number>12</number>
    </property>
    <property name="topMargin">
-    <number>20</number>
+    <number>12</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>12</number>
    </property>
    <property name="bottomMargin">
-    <number>20</number>
+    <number>12</number>
    </property>
    <item>
     <widget class="QLabel" name="titleLabel">
@@ -102,50 +102,37 @@
       <string>🧠 Исследование функции | Вариант 29</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
    <item>
     <layout class="QHBoxLayout" name="contentLayout">
      <property name="spacing">
-      <number>20</number>
+      <number>12</number>
      </property>
      <item>
       <widget class="QGroupBox" name="taskGroup">
-       <property name="title">
-        <string>📌 Условие задачи</string>
-       </property>
        <property name="minimumSize">
         <size>
-         <width>450</width>
+         <width>380</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="title">
+        <string>📌 Условие задачи</string>
        </property>
        <layout class="QVBoxLayout" name="taskLayout">
         <item>
          <widget class="QLabel" name="systemLabel">
+          <property name="styleSheet">
+           <string>background: #ffffff; border-radius: 16px; padding: 15px; border: 2px solid #3b82f6; color: #0f172a;</string>
+          </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
-&lt;div align=&quot;center&quot;&gt;
-&lt;table style=&quot;font-family: 'Times New Roman', 'Consolas', serif; font-size: 18px; border-collapse: collapse; color: #0f172a;&quot;&gt;
-&lt;tr&gt;
-    &lt;td style=&quot;font-size: 42px; vertical-align: middle; color: #1e40af;&quot;&gt;{&lt;/td&gt;
-    &lt;td style=&quot;padding: 8px; text-align: left; color: #0f172a;&quot;&gt;
-        a·√x, &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;0 ≤ x &amp;lt; 1&lt;br&gt;
-        b/x, &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1 ≤ x &amp;lt; 2&lt;br&gt;
-        c·x² - d·x + e, &amp;nbsp;x ≥ 2
-    &lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;table border=&quot;0&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; border-collapse:collapse;&quot; align=&quot;center&quot; cellspacing=&quot;2&quot; cellpadding=&quot;0&quot;&gt;&lt;tr&gt;&lt;td style=&quot; vertical-align:middle;&quot;&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Times New Roman','Consolas','serif'; font-size:36px; color:#1e40af;&quot;&gt;{&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;td style=&quot; padding-left:6; padding-right:6; padding-top:6; padding-bottom:6;&quot;&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Times New Roman','Consolas','serif'; font-size:16px; font-weight:700; color:#0f172a;&quot;&gt;a·√x&lt;/span&gt;&lt;span style=&quot; font-family:'Times New Roman','Consolas','serif'; font-size:16px; color:#0f172a;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Times New Roman','Consolas','serif'; font-size:16px; font-weight:700; color:#0f172a;&quot;&gt;b/x&lt;/span&gt;&lt;span style=&quot; font-family:'Times New Roman','Consolas','serif'; font-size:16px; color:#0f172a;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'Times New Roman','Consolas','serif'; font-size:16px; font-weight:700; color:#0f172a;&quot;&gt;c·x² - d·x + e&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="styleSheet">
-           <string>background: #ffffff; border-radius: 20px; padding: 25px; border: 2px solid #3b82f6; color: #0f172a;</string>
+           <set>Qt::AlignmentFlag::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -154,109 +141,191 @@
      </item>
      <item>
       <widget class="QGroupBox" name="researchGroup">
-       <property name="title">
-        <string>🔬 Аналитические свойства</string>
-       </property>
        <property name="minimumSize">
         <size>
-         <width>480</width>
+         <width>400</width>
          <height>0</height>
         </size>
        </property>
+       <property name="title">
+        <string>🔬 Аналитические свойства</string>
+       </property>
        <layout class="QVBoxLayout" name="researchLayout">
         <property name="spacing">
-         <number>10</number>
+         <number>6</number>
         </property>
         <item>
          <widget class="QLabel" name="domainLabel">
-          <property name="text">
-           <string>📌 Область определения: [0; +∞)</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>📌 Область определения:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="domainValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • a·√x:  x ≥ 0  (0 до 20)
+   • b/x:   x ≠ 0  (-20 до 20)
+   • кв:    x ∈ R  (-20 до 20)</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="continuityLabel">
-          <property name="text">
-           <string>🔗 Непрерывность: зависит от параметров a, b, c, d, e</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>🔗 Непрерывность:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="continuityValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • a·√x:  непрерывен
+   • b/x:   разрыв в x = 0
+   • кв:    непрерывен</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="derivativeLabel">
-          <property name="text">
-           <string>📈 Производная:
-   • 0 &lt; x &lt; 1:  f'(x) = a / (2√x)
-   • 1 &lt; x &lt; 2:  f'(x) = -b / x²
-   • x &gt; 2:     f'(x) = 2c·x - d</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; font-family: 'Consolas', monospace; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>📈 Производная:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="derivativeValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • a·√x:  f'(x) = a/(2√x)
+   • b/x:   f'(x) = -b/x²
+   • кв:    f'(x) = 2c·x - d</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="monotonicityLabel">
-          <property name="text">
-           <string>📉 Монотонность:
-   • (0;1): зависит от знака a
-   • (1;2): зависит от знака b
-   • (2;+∞): зависит от c и d</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>📉 Монотонность:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="monotonicityValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • a·√x:  возрастает
+   • b/x:   убывает (0;20), возр. (-20;0)
+   • кв:    убывает до x = d/(2c)</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="extremumLabel">
-          <property name="text">
-           <string>⚠️ Экстремумы:
-   • x = 1, x = 2 — точки излома
-   • x = d/(2c) — возможный экстремум (при x &gt; 2, c ≠ 0)</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>⚠️ Экстремумы:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="extremumValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • a·√x:  нет
+   • b/x:   нет
+   • кв:    минимум в x = d/(2c)</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="asymptotesLabel">
-          <property name="text">
-           <string>📏 Асимптоты:
-   • Вертикальные: отсутствуют
-   • Горизонтальные: y = 0 при x → +∞ (для ветки 1/x)</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>📏 Асимптоты:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="asymptotesValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • b/x:   верт. x=0, гориз. y=0
+   • ост.:  нет асимптот</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="parityLabel">
-          <property name="text">
-           <string>🔄 Чётность: функция ни чётная, ни нечётная</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>🔄 Чётность:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="parityValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • a·√x:  ни чётная, ни нечётная
+   • b/x:   нечётная
+   • кв:    ни чётная, ни нечётная</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="boundaryLabel">
-          <property name="text">
-           <string>🎯 Значения в граничных точках:
-   • f(0) = 0
-   • f(1) = b
-   • f(2) = 4c - 2d + e</string>
-          </property>
           <property name="styleSheet">
-           <string>background: rgba(255,255,255,0.7); border-radius: 12px; padding: 8px 12px; font-weight: 500; color: #0f172a;</string>
+           <string>background: rgba(255,255,255,0.7); border-radius: 10px; padding: 5px 10px; font-weight: bold; color: #1e40af; font-size: 11px;</string>
+          </property>
+          <property name="text">
+           <string>🎯 Граничные значения:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="boundaryValueLabel">
+          <property name="styleSheet">
+           <string>background: rgba(255,255,255,0.5); border-radius: 10px; padding: 5px 10px; font-family: 'Consolas', monospace; font-size: 10px;</string>
+          </property>
+          <property name="text">
+           <string>   • f(-20) = 400c+20d+e
+   • f(0) = 0
+   • f(20) = 400c-20d+e</string>
           </property>
          </widget>
         </item>
@@ -268,21 +337,21 @@
    <item>
     <layout class="QHBoxLayout" name="buttonLayout">
      <property name="spacing">
-      <number>20</number>
+      <number>15</number>
      </property>
      <item>
       <widget class="QPushButton" name="backButton">
        <property name="minimumSize">
         <size>
-         <width>140</width>
-         <height>45</height>
+         <width>120</width>
+         <height>35</height>
         </size>
-       </property>
-       <property name="text">
-        <string>← Назад</string>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>← Назад</string>
        </property>
       </widget>
      </item>
@@ -290,15 +359,15 @@
       <widget class="QPushButton" name="calculateButton">
        <property name="minimumSize">
         <size>
-         <width>260</width>
-         <height>45</height>
+         <width>220</width>
+         <height>35</height>
         </size>
-       </property>
-       <property name="text">
-        <string>📊 Построить график и таблицу</string>
        </property>
        <property name="cursor">
         <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>📊 Построить график и таблицу</string>
        </property>
       </widget>
      </item>
@@ -306,4 +375,6 @@
    </item>
   </layout>
  </widget>
+ <resources/>
+ <connections/>
 </ui>

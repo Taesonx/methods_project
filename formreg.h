@@ -28,6 +28,9 @@ private slots:
     void onBackButtonClicked();
 
 private:
+    void showError(const QString& title, const QString& message);
+    bool isValidEmail(const QString& email);
+
     Ui::FormReg *ui;
 };
 

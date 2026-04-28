@@ -11,6 +11,7 @@ TcpClient::TcpClient(QObject *parent) : QObject(parent)
 {
     socket = new QTcpSocket(this);
     m_isConnected = false;
+    buffer.clear();
 
     connect(socket, &QTcpSocket::connected, this, &TcpClient::onConnected);
     connect(socket, &QTcpSocket::disconnected, this, &TcpClient::onDisconnected);
@@ -56,27 +57,52 @@ void TcpClient::sendRequest(const QString& endpoint, const QJsonObject& data)
 
     currentEndpoint = endpoint;
 
-    QJsonObject request;
-    request["endpoint"] = endpoint;
-    request["data"] = data;
+    QString request;
 
-    QJsonDocument doc(request);
-    QByteArray jsonData = doc.toJson();
+    // Формируем запрос в формате, который понимает сервер Даши
+    if (endpoint == "/login") {
+        QString login = data["login"].toString();
+        QString password = data["password"].toString();
+        request = QString("auth&%1&%2").arg(login).arg(password);
+    }
+    else if (endpoint == "/register") {
+        QString login = data["login"].toString();
+        QString password = data["password"].toString();
+        QString email = data["email"].toString();
+        request = QString("reg&%1&%2&%3").arg(login).arg(password).arg(email);
+    }
+    else if (endpoint == "/reset") {
+        QString email = data["email"].toString();
+        request = QString("reset&%1").arg(email);
+    }
+    else if (endpoint == "/param_change") {
+        double a = data["a"].toDouble();
+        double b = data["b"].toDouble();
+        double c = data["c"].toDouble();
+        double d = data["d"].toDouble();
+        double e = data["e"].toDouble();
+        request = QString("params&%1&%2&%3&%4&%5")
+                      .arg(a).arg(b).arg(c).arg(d).arg(e);
+    }
+    else if (endpoint == "/calculate") {
+        double x = data["x"].toDouble();
+        double a = data["a"].toDouble();
+        double b = data["b"].toDouble();
+        double c = data["c"].toDouble();
+        double d = data["d"].toDouble();
+        double e = data["e"].toDouble();
+        request = QString("check&0&29&%1&%2&%3&%4&%5&%6")
+                      .arg(x).arg(a).arg(b).arg(c).arg(d).arg(e);
+    }
+    else {
+        qDebug() << "Неизвестный endpoint:" << endpoint;
+        return;
+    }
 
-    // Формируем HTTP-подобный запрос
-    QString httpRequest = QString("POST %1 HTTP/1.1\r\n"
-                                  "Content-Type: application/json\r\n"
-                                  "Content-Length: %2\r\n"
-                                  "\r\n"
-                                  "%3")
-                              .arg(endpoint)
-                              .arg(jsonData.size())
-                              .arg(QString::fromUtf8(jsonData));
-
-    socket->write(httpRequest.toUtf8());
+    socket->write(request.toUtf8() + "\n");
     socket->flush();
 
-    qDebug() << "Отправлен запрос на" << endpoint;
+    qDebug() << "Отправлен запрос:" << request;
 }
 
 void TcpClient::onConnected()
@@ -95,6 +121,7 @@ void TcpClient::onDisconnected()
 
 void TcpClient::onError(QAbstractSocket::SocketError socketError)
 {
+    Q_UNUSED(socketError);
     QString errorMsg = socket->errorString();
     qDebug() << "Ошибка сокета:" << errorMsg;
     emit errorOccurred(errorMsg);
@@ -106,41 +133,75 @@ void TcpClient::onReadyRead()
 
     QString data = QString::fromUtf8(buffer);
 
-    if (data.contains("\r\n\r\n")) {
-        QStringList parts = data.split("\r\n\r\n");
-        if (parts.size() >= 2) {
-            QString body = parts[1];
-            buffer.clear();
-            parseResponse(body);
+    // Проверяем, есть ли полный ответ (заканчивается на \n)
+    if (data.contains('\n')) {
+        QStringList lines = data.split('\n');
+        for (const QString& line : lines) {
+            if (!line.trimmed().isEmpty()) {
+                parseResponse(line.trimmed());
+            }
         }
+        buffer.clear();
     }
 }
 
 void TcpClient::parseResponse(const QString& response)
 {
-    QJsonParseError parseError;
-    QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8(), &parseError);
+    qDebug() << "Получен ответ:" << response;
 
-    if (parseError.error != QJsonParseError::NoError) {
-        qDebug() << "Ошибка парсинга JSON:" << parseError.errorString();
-        emit errorOccurred("Ошибка обработки ответа сервера");
-        return;
-    }
-
-    QJsonObject jsonResponse = doc.object();
-    QString status = jsonResponse["status"].toString();
-    QString endpoint = currentEndpoint;
-
-    emit responseReceived(endpoint, jsonResponse);
-
-    if (endpoint == "/login") {
-        bool success = (status == "success");
-        QString message = jsonResponse["message"].toString();
+    // Парсим ответ сервера в формате Даши
+    if (response.startsWith("auth+")) {
+        // auth+&login&role
+        QStringList parts = response.split('&');
+        bool success = true;
+        QString message = "Успешный вход";
+        if (parts.size() >= 2) {
+            message = QString("Добро пожаловать, %1!").arg(parts[1]);
+        }
         emit loginResponse(success, message);
     }
-    else if (endpoint == "/register") {
-        bool success = (status == "success");
-        QString message = jsonResponse["message"].toString();
-        emit registerResponse(success, message);
+    else if (response.startsWith("auth-")) {
+        emit loginResponse(false, "Неверный логин или пароль");
+    }
+    else if (response.startsWith("reg+")) {
+        // reg+&login
+        emit registerResponse(true, "Регистрация успешна");
+    }
+    else if (response.startsWith("reg-")) {
+        emit registerResponse(false, "Пользователь уже существует");
+    }
+    else if (response.startsWith("reset+")) {
+        // reset+&newpassword
+        QStringList parts = response.split('&');
+        if (parts.size() >= 2) {
+            QString newPass = parts[1];
+            emit passwordResetResponse(true, newPass);
+        } else {
+            emit passwordResetResponse(true, "Пароль сброшен");
+        }
+    }
+    else if (response.startsWith("reset-")) {
+        emit passwordResetResponse(false, "Пользователь с таким email не найден");
+    }
+    else if (response.startsWith("params+")) {
+        // params+&ok - параметры успешно сохранены
+        qDebug() << "Параметры успешно сохранены на сервере";
+    }
+    else if (response.startsWith("params-")) {
+        // params-&ошибка параметров
+        qDebug() << "Ошибка сохранения параметров на сервере:" << response;
+    }
+    else if (response.startsWith("check+")) {
+        // check+ - вычисление успешно сохранено
+        qDebug() << "Вычисление успешно сохранено на сервере";
+    }
+    else if (response.startsWith("check-")) {
+        qDebug() << "Ошибка вычисления на сервере";
+    }
+    else if (response == "Connected to Calculation Server!") {
+        qDebug() << "Приветствие от сервера";
+    }
+    else {
+        qDebug() << "Неизвестный формат ответа:" << response;
     }
 }

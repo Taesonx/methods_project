@@ -18,7 +18,6 @@ SOURCES += \
     functionsforclient.cpp \
     main.cpp \
     mainwindow.cpp \
-    mathfunction.cpp \
     tcpclient.cpp
 
 HEADERS += \

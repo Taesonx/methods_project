@@ -30,6 +30,8 @@ private slots:
     void onForgotButtonClicked();
 
 private:
+    void showError(const QString& title, const QString& message);
+
     Ui::FormAuth *ui;
 };
 

@@ -28,6 +28,8 @@ public slots:
     void onResetFailed(const QString& error);
 
 private:
+    void showError(const QString& title, const QString& message);
+
     Ui::FormResetPassword *ui;
 };
 

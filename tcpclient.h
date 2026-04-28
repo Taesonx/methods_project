@@ -27,6 +27,7 @@ signals:
     void responseReceived(const QString& endpoint, const QJsonObject& response);
     void loginResponse(bool success, const QString& message);
     void registerResponse(bool success, const QString& message);
+    void passwordResetResponse(bool success, const QString& newPassword);
 
 private slots:
     void onConnected();

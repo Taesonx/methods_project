@@ -20,6 +20,7 @@ public:
     ~FunctionsForClient();
 
 private slots:
+    // Обработчики действий
     void processAuth(const QString& login, const QString& password);
     void processRegister(const QString& login, const QString& password, const QString& email);
     void processTaskSelected(int taskId);
@@ -27,30 +28,36 @@ private slots:
     void processResetPassword(const QString& email);
     void showResetPasswordForm();
 
+    // Навигация между формами
     void showAuthForm();
     void showRegForm();
     void showTaskChoiceForm();
     void showSolveForm();
 
+    // Обработчики состояния сервера
     void onServerConnected();
     void onServerDisconnected();
     void onServerError(const QString& error);
     void onLoginResponse(bool success, const QString& message);
     void onRegisterResponse(bool success, const QString& message);
+    void onPasswordResetResponse(bool success, const QString& newPassword);
 
 private:
     void connectSignals();
     void initTestUsers();
     void connectToServer();
 
+    // Указатели на формы
     FormAuth* authForm;
     FormReg* regForm;
     FormTaskChoice* taskChoiceForm;
     FormSolve* solveForm;
     MainWindow* mainWindow;
     FormResetPassword* resetPasswordForm;
+
     bool serverAvailable;
 
+    // Структура пользователя (для локального резерва)
     struct User {
         QString login;
         QString password;
