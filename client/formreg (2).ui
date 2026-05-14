@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FormReg</class>
+ <widget class="QWidget" name="FormReg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>450</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Регистрация</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #fef9e6,
+                                stop:1 #fae8c8);
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* Кнопка-глаз */
+QPushButton#togglePasswordButton {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: #8b5a2b;
+    padding: 0px;
+    margin: 0px;
+    max-width: 35px;
+    min-width: 35px;
+}
+
+QPushButton#togglePasswordButton:hover {
+    color: #6b8c42;
+}
+
+QPushButton#togglePasswordButton:pressed {
+    color: #4a6a2a;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item alignment="Qt::AlignmentFlag::AlignHCenter">
+      <widget class="QLabel" name="titleLabel">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>-1</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel#titleLabel {
+    color: #8b5a2b;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}</string>
+       </property>
+       <property name="text">
+        <string>Регистрация нового пользователя</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="loginLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel#loginLabel, QLabel#passwordLabel, QLabel#emailLabel {
+    color: #8b5a2b;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 70px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Логин:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" colspan="2">
+        <widget class="QLineEdit" name="loginEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #fffef7;
+    border: 1px solid #e2c8a0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #5c3a1e;
+}
+QLineEdit:focus {
+    border: 2px solid #d4a373;
+    background-color: #ffffff;
+}
+QLineEdit:hover {
+    border: 1px solid #c49a6c;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>Введите логин</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="passwordLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel#loginLabel, QLabel#passwordLabel, QLabel#emailLabel {
+    color: #8b5a2b;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 70px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Пароль:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="passwordEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #fffef7;
+    border: 1px solid #e2c8a0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #5c3a1e;
+}
+QLineEdit:focus {
+    border: 2px solid #d4a373;
+    background-color: #ffffff;
+}
+QLineEdit:hover {
+    border: 1px solid #c49a6c;
+}</string>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::EchoMode::Password</enum>
+         </property>
+         <property name="placeholderText">
+          <string>Введите пароль</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="togglePasswordButton">
+         <property name="text">
+          <string>👁️</string>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="emailLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel#loginLabel, QLabel#passwordLabel, QLabel#emailLabel {
+    color: #8b5a2b;
+    font-size: 16px;
+    font-weight: bold;
+    min-width: 70px;
+}</string>
+         </property>
+         <property name="text">
+          <string>Email:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QLineEdit" name="emailEdit">
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+    background-color: #fffef7;
+    border: 1px solid #e2c8a0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #5c3a1e;
+}
+QLineEdit:focus {
+    border: 2px solid #d4a373;
+    background-color: #ffffff;
+}
+QLineEdit:hover {
+    border: 1px solid #c49a6c;
+}</string>
+         </property>
+         <property name="placeholderText">
+          <string>example@mail.com</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="registerButton">
+         <property name="styleSheet">
+          <string notr="true">QPushButton#registerButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #6b8c42,
+                                stop:1 #4a6a2a);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    min-width: 150px;
+}
+QPushButton#registerButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #4a6a2a,
+                                stop:1 #2e4a1a);
+}
+QPushButton#registerButton:pressed {
+    background: #2e4a1a;
+}</string>
+         </property>
+         <property name="text">
+          <string>Зарегистрироваться</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="backButton">
+         <property name="styleSheet">
+          <string notr="true">QPushButton#backButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #a0a0a0,
+                                stop:1 #808080);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: bold;
+    min-width: 100px;
+}
+QPushButton#backButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #808080,
+                                stop:1 #606060);
+}</string>
+         </property>
+         <property name="text">
+          <string>Назад</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

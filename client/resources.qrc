@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>formula.jpg</file>
+        <file>title.jpg</file>
+    </qresource>
+</RCC>
